@@ -1,18 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { CovidContext } from '../../hooks/Covid';
+import { useCovid } from '../../hooks/Covid';
 
 import { Container } from './styles';
 
 const CountryPicker: React.FC = () => {
-  const { countries } = useContext(CovidContext);
+  const { statistics, handleCountryChange } = useCovid();
 
   return (
     <Container>
-      <select onChange={() => {}}>
+      <select
+        onChange={(e): void => {
+          handleCountryChange(e.target.value);
+        }}
+      >
         <option value="">Global</option>
-        {countries
-          ? countries.map((country) => {
+        {statistics.countries
+          ? statistics.countries.map((country) => {
               return <option key={country.name}>{country.name}</option>;
             })
           : 'Loading...'}

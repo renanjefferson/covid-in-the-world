@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from 'react';
 
 import api from '../services/api';
 
@@ -7,17 +13,22 @@ interface CountriesState {
   iso3: string;
 }
 
-interface CovidContextData {
+interface GlobalState {
   confirmed: number;
   recovered: number;
   deaths: number;
   countries?: CountriesState[];
 }
 
+interface CovidContextData {
+  statistics: GlobalState;
+  handleCountryChange(country: string): Promise<void>;
+}
+
 const CovidContext = createContext<CovidContextData>({} as CovidContextData);
 
 const CovidProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<CovidContextData>({} as CovidContextData);
+  const [data, setData] = useState<GlobalState>({} as GlobalState);
 
   useEffect(() => {
     async function loadGlobalData(): Promise<void> {
@@ -40,13 +51,26 @@ const CovidProvider: React.FC = ({ children }) => {
 
     loadGlobalData();
   }, []);
+
+  const handleCountryChange = useCallback(
+    async (country) => {
+      const response = await api.get(`/api/countries/${country}`);
+
+      setData({
+        ...data,
+        confirmed: response.data.confirmed.value,
+        recovered: response.data.recovered.value,
+        deaths: response.data.deaths.value,
+      });
+    },
+    [data],
+  );
+
   return (
     <CovidContext.Provider
       value={{
-        confirmed: data.confirmed,
-        recovered: data.recovered,
-        deaths: data.deaths,
-        countries: data.countries,
+        statistics: data,
+        handleCountryChange,
       }}
     >
       {children}
@@ -54,4 +78,14 @@ const CovidProvider: React.FC = ({ children }) => {
   );
 };
 
-export { CovidProvider, CovidContext };
+function useCovid(): CovidContextData {
+  const context = useContext(CovidContext);
+
+  if (!context) {
+    throw new Error('');
+  }
+
+  return context;
+}
+
+export { CovidProvider, useCovid };
