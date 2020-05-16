@@ -1,4 +1,4 @@
-<h6>Aplicação foi desenvolvida para listar as estatísticas de pessoas que foram infectadas, recuperadas e mortas pelo Coronavírus no mundo.</h6>
+Aplicação foi desenvolvida para listar as estatísticas de pessoas que foram infectadas, recuperadas e mortas pelo Coronavírus no mundo.
 
 ## Preview
 
