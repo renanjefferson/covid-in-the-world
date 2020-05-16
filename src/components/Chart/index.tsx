@@ -23,7 +23,7 @@ const Chart: React.FC = () => {
   return (
     <Container>
       <div>
-        <h2>Gráficos Coronavírus (COVID-19)</h2>
+        <h2>Gráfico Coronavírus (COVID-19)</h2>
         <Bar
           data={barData}
           width={100}
