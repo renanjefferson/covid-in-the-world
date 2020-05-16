@@ -2,7 +2,7 @@
 
 ## Preview
 
-<img alt="Coronavírus (COVID-19)" src="https://github.com/renanjefferson/covid-in-the-world/tree/master/src/assets/preview.png" width="1000px" />
+<img alt="Coronavírus (COVID-19)" src="https://github.com/renanjefferson/covid-in-the-world/blob/master/src/assets/preview.png" width="100%" />
 
 ## Para desenvolvimento
 
