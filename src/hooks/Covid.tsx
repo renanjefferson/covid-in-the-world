@@ -18,6 +18,7 @@ interface GlobalState {
   recovered: number;
   deaths: number;
   countries?: CountriesState[];
+  country: string;
 }
 
 interface CovidContextData {
@@ -46,6 +47,7 @@ const CovidProvider: React.FC = ({ children }) => {
         recovered: recovered.value,
         deaths: deaths.value,
         countries,
+        country: 'Global',
       });
     }
 
@@ -61,6 +63,7 @@ const CovidProvider: React.FC = ({ children }) => {
         confirmed: response.data.confirmed.value,
         recovered: response.data.recovered.value,
         deaths: response.data.deaths.value,
+        country,
       });
     },
     [data],
